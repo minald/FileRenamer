@@ -3,10 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Renamer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
+        Title="MainWindow" Height="350" Width="525" 
+        MaxHeight="350" MaxWidth="525">
+    <Grid Margin="0,0,2,0">
+        <Grid HorizontalAlignment="Left" Height="75" VerticalAlignment="Top" Width="507">
+            <Button Name="chooseFile" Content="Choose file" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="130" Height="55" Click="chooseFile_Click"/>
+            <Button Name="change" Content="Change" HorizontalAlignment="Left" Margin="377,10,0,0" VerticalAlignment="Top" Width="130" Height="55" Click="change_Click"/>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="245" Margin="0,75,0,0" VerticalAlignment="Top" Width="517">
+            <TextBlock Name="filelist" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="225" Width="251"/>
+        </Grid>
     </Grid>
 </Window>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,23 @@ namespace Renamer
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void chooseFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if(openFileDialog.ShowDialog() == true)
+            {
+                foreach(var filename in openFileDialog.FileNames)
+                {
+                    filelist.Text += filename + Environment.NewLine;
+                }
+            }
+        }
+
+        private void change_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
