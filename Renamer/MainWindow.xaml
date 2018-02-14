@@ -6,12 +6,15 @@
         mc:Ignorable="d" Name="RenamerMainWindow" Title="MainWindow" 
         Height="350" Width="550" ResizeMode="NoResize">
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="80" VerticalAlignment="Top" Width="542">
-            <Button Name="chooseFile" Content="Choose file" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="130" Height="55" Click="chooseFile_Click"/>
-            <Button Name="change" Content="Change" HorizontalAlignment="Left" Margin="402,10,0,0" VerticalAlignment="Top" Width="130" Height="55" Click="change_Click"/>
+        <Grid Height="80" VerticalAlignment="Top">
+            <Button Name="ChooseFile" Content="Choose file" HorizontalAlignment="Left" Click="ChooseFile_Click" 
+                    Margin="10,10,0,15" Width="130" Height="55" />
+            <Button Name="ConvertExtensionToLowercase" Content="Convert extension to lowercase" Click="ConvertExtensionToLowercase_Click"
+                    Margin="352,10,10,15" Width="180" Height="55" />
         </Grid>
-        <Grid HorizontalAlignment="Left" Height="240" Margin="0,80,0,0" VerticalAlignment="Top" Width="542">
-            <ListView Name="filelist" HorizontalAlignment="Left" Height="220" Margin="10,10,0,0" VerticalAlignment="Top" Width="522">
+        <Grid Height="240" VerticalAlignment="Bottom">
+            <ListView Name="Filelist" HorizontalAlignment="Left" Height="220" Margin="10,10,0,0" VerticalAlignment="Top" Width="522" 
+                      ItemsSource="{Binding Path=Modifications}">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Old name" Width="256" DisplayMemberBinding="{Binding OldName}" />
@@ -19,7 +22,6 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-
         </Grid>
     </Grid>
 </Window>
