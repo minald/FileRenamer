@@ -53,8 +53,13 @@ namespace Renamer
                 Filelist.Items.Refresh();
             }
         }
+
+        private void Rename_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
-    
+
     public class Modification
     {
         public string OldName { get; set; }

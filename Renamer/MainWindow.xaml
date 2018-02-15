@@ -3,25 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" Name="RenamerMainWindow" Title="MainWindow" 
-        Height="350" Width="550" ResizeMode="NoResize">
+        mc:Ignorable="d" Name="RenamerMainWindow" Title="FileRenamer" 
+        Height="400" Width="600" ResizeMode="NoResize" >
     <Grid>
-        <Grid Height="80" VerticalAlignment="Top">
-            <Button Name="ChooseFile" Content="Choose file" HorizontalAlignment="Left" Click="ChooseFile_Click" 
-                    Margin="10,10,0,15" Width="130" Height="55" />
-            <Button Name="ConvertExtensionToLowercase" Content="Convert extension to lowercase" Click="ConvertExtensionToLowercase_Click"
-                    Margin="352,10,10,15" Width="180" Height="55" />
-        </Grid>
-        <Grid Height="240" VerticalAlignment="Bottom">
-            <ListView Name="Filelist" HorizontalAlignment="Left" Height="220" Margin="10,10,0,0" VerticalAlignment="Top" Width="522" 
-                      ItemsSource="{Binding Path=Modifications}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Old name" Width="256" DisplayMemberBinding="{Binding OldName}" />
-                        <GridViewColumn Header="New name" Width="256" DisplayMemberBinding="{Binding NewName}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Button Name="ChooseFile" Content="Choose file" Click="ChooseFile_Click" 
+                Grid.Row="0" Grid.Column="0" Margin="10" TextElement.FontSize="16"/>
+        <Button Name="ConvertExtensionToLowercase" Content="Convert extension to lowercase" Click="ConvertExtensionToLowercase_Click" 
+                Grid.Row="0" Grid.Column="2" Margin="10"/>
+        <ListView Name="Filelist" ItemsSource="{Binding Path=Modifications}"
+                  Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Old name" Width="290" DisplayMemberBinding="{Binding OldName}" />
+                    <GridViewColumn Header="New name" Width="290" DisplayMemberBinding="{Binding NewName}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Name="Rename" Content="Rename" Click="Rename_Click" 
+                Grid.Row="2" Grid.Column="2" Margin="10" TextElement.FontSize="20" TextElement.FontWeight="Bold"/>
     </Grid>
 </Window>
