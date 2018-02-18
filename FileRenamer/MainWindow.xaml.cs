@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 
 namespace FileRenamer
@@ -38,25 +40,38 @@ namespace FileRenamer
             }
         }
 
-        private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e)
+        private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e) //TODO: Refactor
         {
             var selectedIndex = Filelist.SelectedIndex;
             if(selectedIndex == -1)
             {
-                MessageBox.Show("Please, choose file.", "File isn't chosen", MessageBoxButton.OK, MessageBoxImage.Warning);
+                InitializeNewNames(Filelist.Items.Cast<Modification>());
             }
             else
             {
-                var modification = Filelist.Items.GetItemAt(selectedIndex) as Modification;
-                modification.NewName = Path.ChangeExtension(modification.OldName, ".jpg");
+                InitializeNewNames(Filelist.SelectedItems as IEnumerable<Modification>);
+            }
+        }
 
+        private void InitializeNewNames(IEnumerable<Modification> modifications)
+        {
+            foreach(Modification modification in modifications)
+            {
+                modification.NewName = Path.ChangeExtension(modification.OldName, ".jpg"); //TODO: Add supporting of all types
                 Filelist.Items.Refresh();
             }
         }
 
         private void Rename_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach(Modification modification in Filelist.Items)
+            {
+                if(!String.IsNullOrEmpty(modification.NewName))
+                {
+                    File.Move(modification.OldName, modification.NewName);
+                }
+            }
+            Filelist.Items.Clear();
         }
     }
 
