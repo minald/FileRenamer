@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 
-namespace Renamer
+namespace FileRenamer
 {
     public partial class MainWindow : Window
     {
@@ -17,8 +17,8 @@ namespace Renamer
 
         private void FixMainWindowRightAndBottomMargins()
         {
-            RenamerMainWindow.Height += 8;
-            RenamerMainWindow.Width += 8;
+            FileRenamerMainWindow.Height += 8;
+            FileRenamerMainWindow.Width += 8;
         }
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Renamer.Properties
+namespace FileRenamer.Properties
 {
 
 
