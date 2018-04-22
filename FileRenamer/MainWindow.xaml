@@ -20,7 +20,7 @@
                 Grid.Row="0" Grid.Column="0" Margin="10" TextElement.FontSize="16"/>
         <Button Name="ConvertExtensionToLowercase" Content="Convert extension to lowercase" Click="ConvertExtensionToLowercase_Click" 
                 Grid.Row="0" Grid.Column="2" Margin="10"/>
-        <ListView Name="Filelist" ItemsSource="{Binding Path=Modifications}"
+        <ListView Name="Filelist" ItemsSource="{Binding Path=Modifications, Mode=TwoWay}"
                   Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
             <ListView.View>
                 <GridView>

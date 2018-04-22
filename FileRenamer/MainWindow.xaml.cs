@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -9,15 +9,16 @@ namespace FileRenamer
 {
     public partial class MainWindow : Window
     {
-        public List<Modification> Modifications = new List<Modification>();
+        public ObservableCollection<Modification> Modifications { get; set; } = new ObservableCollection<Modification>();
 
         public MainWindow()
         {
             InitializeComponent();
-            FixMainWindowRightAndBottomMargins();
+            DataContext = this;
+            FixMainWindowRightAndBottomPaddings();
         }
 
-        private void FixMainWindowRightAndBottomMargins()
+        private void FixMainWindowRightAndBottomPaddings()
         {
             FileRenamerMainWindow.Height += 8;
             FileRenamerMainWindow.Width += 8;
@@ -25,66 +26,38 @@ namespace FileRenamer
 
         private void ChooseFile_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Multiselect = true
-            };
-
-            if(openFileDialog.ShowDialog() ?? false)
-            {
-                foreach(var pathWithFilename in openFileDialog.FileNames)
-                {
-                    FileInfo file = new FileInfo(pathWithFilename);
-                    Filelist.Items.Add(new Modification(pathWithFilename, ""));
-                }
-            }
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
+            openFileDialog.ShowDialog();
+            openFileDialog.FileNames.ToList().ForEach(x => Modifications.Add(new Modification(x)));
         }
 
-        private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e) //TODO: Refactor
+        private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e)
         {
-            var selectedIndex = Filelist.SelectedIndex;
-            if(selectedIndex == -1)
-            {
-                InitializeNewNames(Filelist.Items.Cast<Modification>());
-            }
-            else
-            {
-                InitializeNewNames(Filelist.SelectedItems as IEnumerable<Modification>);
-            }
+            var isSomethingSelected = Filelist.SelectedItems.Count != 0;
+            var selectedModifications = isSomethingSelected ? Filelist.SelectedItems.Cast<Modification>() : Modifications;
+            selectedModifications.ToList().ForEach(x => MakeExtensionLow(x.OldName));
         }
 
-        private void InitializeNewNames(IEnumerable<Modification> modifications)
+        private void MakeExtensionLow(string modificationOldName)
         {
-            foreach(Modification modification in modifications)
-            {
-                modification.NewName = Path.ChangeExtension(modification.OldName, ".jpg"); //TODO: Add supporting of all types
-                Filelist.Items.Refresh();
-            }
+            string newLowExtension = Path.GetExtension(modificationOldName).ToLower();
+            string newNameWithLowExtension = Path.ChangeExtension(modificationOldName, newLowExtension);
+            Modifications.First(x => x.OldName == modificationOldName).NewName = newNameWithLowExtension;
         }
 
         private void Rename_Click(object sender, RoutedEventArgs e)
         {
-            foreach(Modification modification in Filelist.Items)
-            {
-                if(!String.IsNullOrEmpty(modification.NewName))
-                {
-                    File.Move(modification.OldName, modification.NewName);
-                }
-            }
-            Filelist.Items.Clear();
+            Modifications.ToList().ForEach(x => RenameFile(x));
+            Modifications.Clear();
         }
-    }
 
-    public class Modification
-    {
-        public string OldName { get; set; }
-
-        public string NewName { get; set; }
-
-        public Modification(string oldName, string newName)
+        private void RenameFile(Modification modification)
         {
-            OldName = oldName;
-            NewName = newName;
+            if (!String.IsNullOrEmpty(modification.NewName))
+            {
+                File.Move(modification.OldName, modification.NewName);
+            }
         }
     }
 }
