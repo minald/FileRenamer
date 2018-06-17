@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" Name="FileRenamerMainWindow" Title="FileRenamer" 
-        Height="400" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" >
+        Height="400" Width="600" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="#FFA4FFB5" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -14,17 +14,26 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="9*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Button Name="ChooseFile" Content="Choose file" Click="ChooseFile_Click" 
+        <Button Name="ChooseFiles" Content="Choose files" Click="ChooseFiles_Click" 
                 Grid.Row="0" Grid.Column="0" Margin="10" TextElement.FontSize="16"/>
         <Button Name="ConvertExtensionToLowercase" Content="Convert extension to lowercase" Margin="10"
-                Grid.Row="0" Grid.Column="2" Click="ConvertExtensionToLowercase_Click"/>
-        <Label Name="FolderName" Content="Folder is not selected" Height="23"
-               Grid.Row="1" Grid.ColumnSpan="3" Padding="0" Margin="10,0" VerticalContentAlignment="Center" FontSize="13"/>
-        <ListView Name="Filelist" ItemsSource="{Binding Path=Modifications, Mode=TwoWay}"
-                  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
+                Grid.Row="0" Grid.Column="1" Click="ConvertExtensionToLowercase_Click"/>
+        <Button Name="ChangeNames" Content="Change names" Click="ChangeNames_Click"
+                Grid.Column="2" Margin="10" FontSize="16"/>
+        <Label Content="Name template : " HorizontalAlignment="Right" VerticalContentAlignment="Center"
+               Grid.Column="1" Grid.Row="1" Padding="0"/>
+        <TextBox Name="NameTemplate" Grid.Row="1" Grid.Column="2" Margin="10,0,10,0" TextWrapping="Wrap"/>
+        <CheckBox Name="IsNumerate" Content=" Numerate" VerticalContentAlignment="Center"
+                  Grid.Row="2" Grid.Column="2" Margin="10,0" Padding="0" IsChecked="True" />
+        <Label Name="FolderName" Content="Folder is not selected"
+               Grid.Row="3" Grid.ColumnSpan="3" Padding="0" Margin="10,0" VerticalContentAlignment="Center" FontSize="13"/>
+        <ListView Name="ModificationsListView" ItemsSource="{Binding Path=Modifications, Mode=TwoWay}"
+                  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Margin="10">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Old name" Width="281" DisplayMemberBinding="{Binding OldName}"/>
@@ -33,8 +42,8 @@
             </ListView.View>
         </ListView>
         <Button Name="Rename" Content="Rename" Click="Rename_Click" FontWeight="Bold" FontSize="22"
-                Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Width="267" Margin="10" HorizontalAlignment="Right"/>
+                Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Width="267" Margin="10" HorizontalAlignment="Right"/>
         <Button Name="Clean" Content="Clean" Click="Clean_Click" FontSize="16" 
-                Grid.Row="3" Grid.Column="0" Margin="10"/>
+                Grid.Row="5" Grid.Column="0" Margin="10"/>
     </Grid>
 </Window>

@@ -42,10 +42,8 @@ namespace FileRenamer
             OldName = oldName;
         }
 
-        public void OnPropertyChanged([CallerMemberName]string propertyName = null)
-        {
+        public void OnPropertyChanged([CallerMemberName]string propertyName = null) => 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
 
         public void TryApply()
         {
@@ -55,6 +53,12 @@ namespace FileRenamer
                 OldName = NewName;
                 NewName = String.Empty;
             }
+        }
+
+        public void MakeExtensionLow()
+        {
+            string extensionInLowercase = Path.GetExtension(OldName).ToLower();
+            NewName = Path.ChangeExtension(OldName, extensionInLowercase);
         }
     }
 }

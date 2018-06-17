@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -30,7 +31,7 @@ namespace FileRenamer
 
         #region Handlers
 
-        private void ChooseFile_Click(object sender, RoutedEventArgs e)
+        private void ChooseFiles_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog { Multiselect = true };
             openFileDialog.ShowDialog();
@@ -39,7 +40,17 @@ namespace FileRenamer
             FolderName.Content = "Path to the folder : " + Modification.FolderName;
         }
 
-        private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e) => GetPerfomingModifications().ForEach(x => MakeExtensionLow(x.OldName));
+        private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e) => GetPerfomingModifications().ForEach(x => x.MakeExtensionLow());
+
+        private void ChangeNames_Click(object sender, RoutedEventArgs e)
+        {
+            int counter = 1;
+            foreach (var modification in GetPerfomingModifications())
+            {
+                var number = IsNumerate.IsChecked == true ? (counter++).ToString() : String.Empty;
+                modification.NewName = NameTemplate.Text + number + Path.GetExtension(modification.OldName);
+            }
+        }
 
         private void Clean_Click(object sender, RoutedEventArgs e) => GetPerfomingModifications().ForEach(x => Modifications.Remove(x));
 
@@ -51,16 +62,9 @@ namespace FileRenamer
 
         private List<Modification> GetPerfomingModifications()
         {
-            var isSomethingSelected = Filelist.SelectedItems.Count != 0;
-            var perfomingModifications = isSomethingSelected ? Filelist.SelectedItems.Cast<Modification>() : Modifications;
+            var isSomethingSelected = ModificationsListView.SelectedItems.Count != 0;
+            var perfomingModifications = isSomethingSelected ? ModificationsListView.SelectedItems.Cast<Modification>() : Modifications;
             return perfomingModifications.ToList();
-        }
-
-        private void MakeExtensionLow(string modificationOldName)
-        {
-            string newLowExtension = Path.GetExtension(modificationOldName).ToLower();
-            string newNameWithLowExtension = Path.ChangeExtension(modificationOldName, newLowExtension);
-            Modifications.First(x => x.OldName == modificationOldName).NewName = newNameWithLowExtension;
         }
 
         #endregion
