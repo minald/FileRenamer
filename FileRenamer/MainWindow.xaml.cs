@@ -34,10 +34,12 @@ namespace FileRenamer
         private void ChooseFiles_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog { Multiselect = true };
-            openFileDialog.ShowDialog();
-            openFileDialog.SafeFileNames.ToList().ForEach(x => Modifications.Add(new Modification(x)));
-            Modification.FolderName = Path.GetDirectoryName(openFileDialog.FileName);
-            FolderName.Content = "Path to the folder : " + Modification.FolderName;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                openFileDialog.SafeFileNames.ToList().ForEach(x => Modifications.Add(new Modification(x)));
+                Modification.FolderName = Path.GetDirectoryName(openFileDialog.FileName);
+                FolderName.Content = "Path to the folder : " + Modification.FolderName;
+            }
         }
 
         private void ConvertExtensionToLowercase_Click(object sender, RoutedEventArgs e) => GetPerfomingModifications().ForEach(x => x.MakeExtensionLow());
