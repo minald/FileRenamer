@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 
 namespace FileRenamer
@@ -6,6 +8,8 @@ namespace FileRenamer
     public class Modification : INotifyPropertyChanged
     {
         #region Properties
+
+        public static string FolderName;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -41,6 +45,16 @@ namespace FileRenamer
         public void OnPropertyChanged([CallerMemberName]string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void TryApply()
+        {
+            if (!String.IsNullOrEmpty(NewName))
+            {
+                File.Move(FolderName + "\\" + OldName, FolderName + "\\" + NewName);
+                OldName = NewName;
+                NewName = String.Empty;
+            }
         }
     }
 }
