@@ -21,11 +21,11 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Button Name="ChooseFiles" Content="Choose files" Click="ChooseFiles_Click" 
-                Grid.Row="0" Grid.Column="0" Margin="10" TextElement.FontSize="16"/>
+                Grid.Row="0" Grid.Column="0" Margin="10" TextElement.FontSize="16" Background="#FFFFFFAB"/>
         <Button Name="ConvertExtensionToLowercase" Content="Convert extension to lowercase" Margin="10"
-                Grid.Row="0" Grid.Column="1" Click="ConvertExtensionToLowercase_Click"/>
+                Grid.Row="0" Grid.Column="1" Click="ConvertExtensionToLowercase_Click" Background="#FFFFFFAB"/>
         <Button Name="ChangeNames" Content="Change names" Click="ChangeNames_Click"
-                Grid.Column="2" Margin="10" FontSize="16"/>
+                Grid.Column="2" Margin="10" FontSize="16" Background="#FFFFFFAB"/>
         <Label Content="Name template : " HorizontalAlignment="Right" VerticalContentAlignment="Center"
                Grid.Column="1" Grid.Row="1" Padding="0"/>
         <TextBox Name="NameTemplate" Grid.Row="1" Grid.Column="2" Margin="10,0,10,0" TextWrapping="Wrap"/>
@@ -43,8 +43,8 @@
             </ListView.View>
         </ListView>
         <Button Name="Rename" Content="Rename" Click="Rename_Click" FontWeight="Bold" FontSize="22"
-                Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Width="267" Margin="10" HorizontalAlignment="Right"/>
+                Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Width="267" Margin="10" HorizontalAlignment="Right" Background="#FFFFFFAB"/>
         <Button Name="Clean" Content="Clean" Click="Clean_Click" FontSize="16" 
-                Grid.Row="5" Grid.Column="0" Margin="10"/>
+                Grid.Row="5" Grid.Column="0" Margin="10" Background="#FFFFFFAB"/>
     </Grid>
 </Window>
